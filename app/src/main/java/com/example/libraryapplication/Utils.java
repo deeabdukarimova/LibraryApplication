@@ -3,6 +3,13 @@ package com.example.libraryapplication;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+
 public class Utils {
     /*This is the Database Class where data will be stored. There will be just one
     * Instance of this class in the entire App. Only this class will
@@ -37,6 +44,44 @@ public class Utils {
         sharedPreferences=context.getSharedPreferences("alternate_db",Context.MODE_PRIVATE);//sharepref mode is private,i.e. it will be specific to our app only
 
         /*Initialize array of allBooks inside the constructor only if array does not exist*/
+        //if(null==)
 
+    }
+    //Add Getters for the different list of books
+    public ArrayList<Book> getAllBooks(){
+        /*convert the data received from Shared Preferences to "Book" type using JSON*/
+        Type type=new TypeToken<ArrayList<Book>>(){}.getType();
+        Gson gson=new Gson();
+        ArrayList<Book> books=gson.fromJson(sharedPreferences.getString(ALL_BOOKS_KEY,null),type);
+        return books;
+    }
+    public ArrayList<Book> getAlreadyReadBooks(){
+        /*convert the data received from Shared Preferences to "Book" type using JSON*/
+        Type type=new TypeToken<ArrayList<Book>>(){}.getType();
+        Gson gson=new Gson();
+        ArrayList<Book> books=gson.fromJson(sharedPreferences.getString(ALREADY_READ_BOOKS,null),type);
+        return books;
+    }
+
+    public ArrayList<Book> getWantToReadBooks(){
+        /*convert the data received from Shared Preferences to "Book" type using JSON*/
+        Type type=new TypeToken<ArrayList<Book>>(){}.getType();
+        Gson gson=new Gson();
+        ArrayList<Book> books=gson.fromJson(sharedPreferences.getString(WANT_TO_READ_BOOKS,null),type);
+        return books;
+    }
+    public ArrayList<Book> getFavoriteBooks(){
+        /*convert the data received from Shared Preferences to "Book" type using JSON*/
+        Type type=new TypeToken<ArrayList<Book>>(){}.getType();
+        Gson gson=new Gson();
+        ArrayList<Book> books=gson.fromJson(sharedPreferences.getString(FAVORITE_BOOKS,null),type);
+        return books;
+    }
+    public ArrayList<Book> getCurrentlyReadingBooks(){
+        /*convert the data received from Shared Preferences to "Book" type using JSON*/
+        Type type=new TypeToken<ArrayList<Book>>(){}.getType();
+        Gson gson=new Gson();
+        ArrayList<Book> books=gson.fromJson(sharedPreferences.getString(CURRENTLY_READING_BOOKS,null),type);
+        return books;
     }
 }
