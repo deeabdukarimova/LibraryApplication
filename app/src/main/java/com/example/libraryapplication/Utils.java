@@ -44,8 +44,29 @@ public class Utils {
         sharedPreferences=context.getSharedPreferences("alternate_db",Context.MODE_PRIVATE);//sharepref mode is private,i.e. it will be specific to our app only
 
         /*Initialize array of allBooks inside the constructor only if array does not exist*/
-        //if(null==)
+        if(null==getAllBooks()){//initiate app if user is using it for the first time
+            initData();
+        }
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        Gson gson =new Gson();
 
+        //if list is empty, we will initiate that list of books in the shared pref
+        if(null==getAlreadyReadBooks()){
+            editor.putString(ALREADY_READ_BOOKS,gson.toJson(new ArrayList<Book>()));
+            editor.commit();
+        }
+        if(null==getWantToReadBooks()){
+            editor.putString(WANT_TO_READ_BOOKS,gson.toJson(new ArrayList<Book>()));
+            editor.commit();
+        }
+        if(null==getFavoriteBooks()){
+            editor.putString(FAVORITE_BOOKS,gson.toJson(new ArrayList<Book>()));
+            editor.commit();
+        }
+        if(null==getCurrentlyReadingBooks()){
+            editor.putString(CURRENTLY_READING_BOOKS,gson.toJson(new ArrayList<Book>()));
+            editor.commit();
+        }
     }
     //Add Getters for the different list of books
     public ArrayList<Book> getAllBooks(){
@@ -83,5 +104,8 @@ public class Utils {
         Gson gson=new Gson();
         ArrayList<Book> books=gson.fromJson(sharedPreferences.getString(CURRENTLY_READING_BOOKS,null),type);
         return books;
+    }
+    private void initData(){
+        /*Add data to sharedPreferences. Create new Arraylist for that process*/
     }
 }
